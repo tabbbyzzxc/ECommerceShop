@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./source
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "3001:80"  # Map host port 3001 to container port 80
+    networks:
+      - your-network
+      
+  backend:
+    build:
+      context: ./source  # Set the context to source to access all files
+      dockerfile: docker/api/Dockerfile
+    ports:
+      - "1488:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - your-network
+
+networks:
+  your-network:
+    driver: bridge
